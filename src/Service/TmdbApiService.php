@@ -29,8 +29,11 @@ class TmdbApiService
     public function getPopular(): array
     {
         $res = $this->callApi('movie/popular');
+        if (empty($res)) {
+            return [];
+        }
 
-        return empty($res) ? [] : $res['results'][0];
+        return $this->getInfo($res['results'][0]['id']);
     }
 
     public function byGenres(?string $genreIds): array
@@ -53,13 +56,8 @@ class TmdbApiService
     public function getInfo(int $id): array
     {
         $res = $this->callApi('movie/' . $id, ['append_to_response' => 'videos']);
-        if (empty($res)) {
-            return $res;
-        }
-        $res['backdrop_path'] = sprintf('%s%s%s', $this->getImgBaseUrl(), self::IMG_BACKDROP_SIZE, $res['backdrop_path']);
-        $res['poster_path'] = sprintf('%s%s%s', $this->getImgBaseUrl(), self::IMG_POSTER_SIZE, $res['poster_path']);
 
-        return $res;
+        return $this->updateImgUrl($res);
     }
 
     private function callApi(string $url, array $query = [], string $lang = 'fr-FR'): array
@@ -89,5 +87,16 @@ class TmdbApiService
         });
 
         return $value;
+    }
+
+    private function updateImgUrl(array $res): array
+    {
+        if (empty($res)) {
+            return $res;
+        }
+        $res['backdrop_path'] = sprintf('%s%s%s', $this->getImgBaseUrl(), self::IMG_BACKDROP_SIZE, $res['backdrop_path']);
+        $res['poster_path'] = sprintf('%s%s%s', $this->getImgBaseUrl(), self::IMG_POSTER_SIZE, $res['poster_path']);
+
+        return $res;
     }
 }

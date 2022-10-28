@@ -1,3 +1,16 @@
 body {
     background-color: lightgray;
 }
+
+.backdrop {
+    height: 500px;
+}
+
+.poster {
+    height: 120px;
+}
+
+.bi-play-circle {
+    font-size: 5em;
+    color: white;
+}

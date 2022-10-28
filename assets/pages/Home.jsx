@@ -1,9 +1,12 @@
 import React from "react";
+import Header from "../components/Header";
+import PopularMovie from "../components/PopularMovie";
 
 const Home = () => {
     return (
-        <div className="Home">
-            <p>Content from react page</p>
+        <div className="container">
+            <Header />
+            <PopularMovie />
         </div>
     )
 }
