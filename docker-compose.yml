@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+    php:
+        container_name: php_sf5
+        image: front:7.4
+        ports:
+            - "9002:9002"
+        external_links:
+            - postgres
+        volumes:
+            - .:/var/www/symfony5-docker
+            - /var/run/php7-fpm/:/var/run/php7-fpm/
+            - ./docker/symfony5-docker.conf:/usr/local/etc/php-fpm.d/symfony5-docker.conf
+            - /home/dev/.ssh:/home/dev/.ssh        
+        networks:
+            - common
+            - symfony5-docker
+        working_dir: /var/www/symfony5-docker        
+        tty: true
+
+networks:
+    symfony5-docker:
+        external:
+            name: symfony5-docker
+    common:
+        external:
+            name : common
