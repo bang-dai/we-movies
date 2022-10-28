@@ -35,6 +35,21 @@ class TmdbApiService
         return empty($res) ? [] : $res['results'];
     }
 
+    public function search(string $text): array
+    {
+        if (empty($text) || strlen($text) <= 2) {
+            return [];
+        }
+        $res = $this->callApi('search/movie', ['query' => $text]);
+
+        return empty($res) ? [] : array_column($res['results'], 'title');
+    }
+
+    public function getInfo(int $id): array
+    {
+        return $this->callApi('movie/' . $id, ['append_to_response' => 'videos']);
+    }
+
     private function callApi(string $url, array $query = [], string $lang = 'fr-FR'): array
     {
         $options['query'] = ['language' => $lang];
