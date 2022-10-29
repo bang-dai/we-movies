@@ -13,4 +13,5 @@ body {
 .bi-play-circle {
     font-size: 5em;
     color: white;
+    cursor: pointer;
 }

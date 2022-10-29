@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const PopularMovie = () => {
+const PopularMovie = (props) => {
+    const { showMovie } = props
     const [movie, setMovie] = useState({})
 
     useEffect(() => {
@@ -16,7 +17,7 @@ const PopularMovie = () => {
                 <div className="col-12"><img src={movie.backdrop_path}></img></div>
             </div>
             <div className="position-absolute top-50 start-50">
-                <i className="bi bi-play-circle"></i>
+                <i className="bi bi-play-circle" onClick={() => showMovie(movie.id)}></i>
             </div>
 
             <div className="position-absolute bottom-0 start-0 col-12">

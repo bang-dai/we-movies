@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const GenresMovies = () => {
+const GenresMovies = (props) => {
+    const { showMovie } = props
     const [genres, setGenres] = useState([])
     const [movies, setMovies] = useState([])
 
@@ -19,6 +20,7 @@ const GenresMovies = () => {
             setMovies(res.data)
         })
     }, [])
+
 
     const handleChange = (id) => {
         const newGenres = [...genres]
@@ -47,9 +49,9 @@ const GenresMovies = () => {
 
     return (
         <div className='row'>
-            <div className='col-2'>
+            <div className='col-md-2 col-sm-12'>
                 <div className="card">
-                    <div className="card-body">
+                    <div className="card-body text-bg-light">
                         {genres.map((genre) => (
                             <div className="form-check" key={genre.id}>
                                 <input className="form-check-input" type="checkbox" value={genre.name} id={genre.id} onChange={() => handleChange(genre.id)} />
@@ -61,7 +63,7 @@ const GenresMovies = () => {
                     </div>
                 </div>
             </div>
-            <div className='col-10'>
+            <div className='col-md-10 col-sm-12'>
                 <div className="card">
                     <div className="card-body">
                         {movies.map((movie) => (
@@ -75,7 +77,7 @@ const GenresMovies = () => {
                                             <h5 className="card-title">{movie.title}</h5>
                                             <p className="card-text">{movie.release_date.substring(0, 4)} - (Score: {movie.vote_average}/10 avec {movie.vote_count} votes)</p>
                                             <p className="card-text"><small className="text-muted">{movie.overview}</small></p>
-                                            <button type="button" className="btn btn-primary">Lire les détails</button>
+                                            <button type="button" className="btn btn-primary" onClick={() => showMovie(movie.id)}>Lire les détails</button>
                                         </div>
                                     </div>
                                 </div>
