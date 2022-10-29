@@ -39,8 +39,13 @@ class TmdbApiService
     public function byGenres(?string $genreIds): array
     {
         $res = $this->callApi('discover/movie', ['with_genres' => trim($genreIds)]);
+        if (empty($res)) {
+            return [];
+        }
 
-        return empty($res) ? [] : $res['results'];
+        return array_map(function ($movie) {
+            return $this->updateImgUrl($movie);
+        }, $res['results']);
     }
 
     public function search(string $text): array
