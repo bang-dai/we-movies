@@ -55,7 +55,7 @@ class TmdbApiService
         }
         $res = $this->callApi('search/movie', ['query' => $text]);
 
-        return empty($res) ? [] : array_column($res['results'], 'title');
+        return empty($res) ? [] : $res['results'];
     }
 
     public function getInfo(int $id): array

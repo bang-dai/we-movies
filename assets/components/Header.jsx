@@ -1,13 +1,63 @@
 import React from 'react';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
 const Header = () => {
+
+    const items = [
+        {
+            id: 0,
+            name: 'Cobol'
+        },
+        {
+            id: 1,
+            name: 'JavaScript'
+        },
+        {
+            id: 2,
+            name: 'Basic'
+        },
+        {
+            id: 3,
+            name: 'PHP'
+        },
+        {
+            id: 4,
+            name: 'Java'
+        }
+    ]
+
+    const handleOnSearch = (search, results) => {
+    }
+
+
+    const handleOnSelect = (item) => {
+
+    }
+
+
+    const formatResult = (item) => {
+        return (
+            <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
+        )
+    }
+
+
     return (
         <nav className="navbar bg-light">
             <div className="container-fluid">
                 <a className="navbar-brand" href='#' data-bs-toggle="modal" data-bs-target="#aboutModal">A propos de We Movies</a>
+
                 <form className="d-flex" role="search">
-                    <input className="form-control me-2" type="search" placeholder="Recherche de film" aria-label="Search" />
-                    <button className="btn btn-outline-success" type="submit"><i className="bi bi-search"></i></button>
+                    <div className='autocomplete'>
+                        <ReactSearchAutocomplete
+                            className="form-control me-2"
+                            items={items}
+                            onSearch={handleOnSearch}
+                            onSelect={handleOnSelect}
+                            autoFocus
+                            formatResult={formatResult}
+                        />
+                    </div>
                 </form>
 
                 <div className="modal fade" id="aboutModal" tabIndex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
