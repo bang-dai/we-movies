@@ -1,46 +1,30 @@
-import React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
-const Header = () => {
-
-    const items = [
-        {
-            id: 0,
-            name: 'Cobol'
-        },
-        {
-            id: 1,
-            name: 'JavaScript'
-        },
-        {
-            id: 2,
-            name: 'Basic'
-        },
-        {
-            id: 3,
-            name: 'PHP'
-        },
-        {
-            id: 4,
-            name: 'Java'
-        }
-    ]
+const Header = (props) => {
+    const { showMovie } = props
+    const [movies, setMovies] = useState([])
 
     const handleOnSearch = (search, results) => {
+        if (search != '') {
+            axios.get('/api/search/' + search).then(res => {
+                setMovies(res.data)
+            })
+        }
     }
-
 
     const handleOnSelect = (item) => {
-
+        if (item.id) {
+            showMovie(item.id)
+        }
     }
-
 
     const formatResult = (item) => {
         return (
-            <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
+            <span style={{ display: 'block', textAlign: 'left' }}>{item.title}</span>
         )
     }
-
 
     return (
         <nav className="navbar bg-light">
@@ -51,7 +35,9 @@ const Header = () => {
                     <div className='autocomplete'>
                         <ReactSearchAutocomplete
                             className="form-control me-2"
-                            items={items}
+                            items={movies}
+                            fuseOptions={{ keys: ["title"], minMatchCharLength: 2 }}
+                            resultStringKeyName="title"
                             onSearch={handleOnSearch}
                             onSelect={handleOnSelect}
                             autoFocus

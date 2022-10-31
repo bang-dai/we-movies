@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import GenresMovies from "../components/GenresMovies";
 import Header from "../components/Header";
@@ -35,7 +35,7 @@ const Home = () => {
 
     return (
         <div className="container">
-            <Header />
+            <Header showMovie={showMovie} />
             <PopularMovie showMovie={showMovie} />
             <GenresMovies showMovie={showMovie} />
             <Modal movie={movie} trailer={trailer} />
