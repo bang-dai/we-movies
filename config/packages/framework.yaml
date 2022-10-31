@@ -16,6 +16,12 @@ framework:
     #fragments: true
     php_errors:
         log: true
+    http_client:
+        scoped_clients:
+            tmdb_api.client:
+                base_uri: 'https://api.themoviedb.org/3/'
+                # HTTP Bearer authentication (also called token authentication)
+                auth_bearer: '%env(TMDB_TOKEN)%'
 
 when@test:
     framework:
